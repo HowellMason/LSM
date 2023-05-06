@@ -50,3 +50,5 @@ def register_process():
 def logout():
     session.clear()
     return redirect('/')
+
+    TESTING CLONING TEST

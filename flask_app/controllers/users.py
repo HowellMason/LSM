@@ -51,4 +51,4 @@ def logout():
     session.clear()
     return redirect('/')
 
-    TESTING CLONING TEST
+    TESTING GIT PUSH

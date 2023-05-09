@@ -194,3 +194,60 @@
     word-wrap: break-word;
     color: red;
 }
+
+/* FOOTER */
+
+#footer{
+    margin: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: #393A3D;
+    color: white;
+    padding: 40px;
+    margin-top: 157px;
+}
+
+#footer-top{
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-bottom: 50px;
+}
+
+#footer-top img{
+    height: 50px
+}
+
+#footer-top h1{
+    font-size: 250%;
+}
+
+#footer-body{
+    display: flex;
+    flex: 1;
+    width: 70%
+}
+
+#fb-left{
+    flex: 1;
+}
+
+#fb-left p:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#fb-right{
+    flex: 4;
+}
+
+#footer p{
+    font-size: 85%;
+}
+
+#footer a{
+    color: white;
+}

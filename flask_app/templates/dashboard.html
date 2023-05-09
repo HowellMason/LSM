@@ -40,6 +40,10 @@
                                             <h5> {{ income.name }} </h5>
                                         </div>
                                         <p> &nbsp &nbsp {{ "${:,.2f}".format(income.amount) }} </p>
+                                        <div id="single-bot">
+                                            <a href="/income/edit/{{ income.id }}" id="edit-income-btn"> edit income </a>
+                                            <a href="/income/delete-process/{{ income.id }}"> delete income </a>
+                                        </div>
                                     </div>
                                 {% endfor %}
                             </div>
@@ -57,6 +61,10 @@
                                         <span> Due in days </span>
                                     </div>
                                     <p> &nbsp &nbsp {{ "${:,.2f}".format(bill.amount) }} </p>
+                                    <div id="single-bot">
+                                        <a href="/bill/edit/{{ bill.id }}" id="edit-income-btn"> edit bill </a>
+                                        <a href="/bill/delete-process/{{ bill.id }}"> delete bill </a>
+                                    </div>
                                 </div>
                                 {% endfor %}
                             </div>
@@ -146,7 +154,7 @@
         <div id="add-popup-income">
             <div class="wrapper">
                 <div class="wrapper-title">
-                    <h2> Add  an Income </h2>
+                    <h2> Add an Income </h2>
                     <a href="#" id="close-income-popup"> &times;</a>
                 </div>
                 <div class="content">

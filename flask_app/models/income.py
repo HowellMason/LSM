@@ -39,6 +39,19 @@ class Income:
                 VALUES (%(name)s, %(amount)s, %(user_id)s, NOW(), NOW());"""
         return connectToMySQL(cls.DB).query_db(query, data)
     @classmethod
+    def edit_income(cls, data):
+        query = """UPDATE incomes
+                SET name = %(name)s,
+                amount = %(amount)s
+                WHERE id = %(id)s"""
+        return connectToMySQL(cls.DB).query_db(query, data)
+    @classmethod
+    def get_by_id(cls, data):
+        query = """SELECT * FROM incomes 
+                WHERE id = %(id)s;"""
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return cls(results[0])
+    @classmethod
     def incomes_for_one(cls, data):
         query = """SELECT * FROM incomes
                 LEFT JOIN users
@@ -50,5 +63,10 @@ class Income:
             all_incomes.append(income)
             print(income)
         return all_incomes
+    @classmethod
+    def delete_income(cls, data):
+        query = """DELETE FROM incomes
+                WHERE id = %(id)s;"""
+        return connectToMySQL(cls.DB).query_db(query, data)
 
 

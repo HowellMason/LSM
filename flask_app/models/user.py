@@ -19,19 +19,18 @@ class User:
         self.phone_number = data['phone_number']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.incomes = []
-        self.bills = []
     @staticmethod
     def validate_registration(user):
         is_valid = True
-        query = " SELECT * FROM users WHERE email = %(email)s;"
-        results = connectToMySQL(User.DB).query_db(query, user)
+        email_valid = " SELECT * FROM users WHERE email = %(email)s;"
+        email_results = connectToMySQL(User.DB).query_db(email_valid, user)
+        number_valid = "SELECT * FROM users WHERE phone_number = %(phone_number)s;"
+        number_results = connectToMySQL(User.DB).query_db(number_valid, user)
         allowed = re.compile("^[A-Za-z ]*$")
         phone_allowed = re.compile("^[0-9 ]*$")
         check_first = bool(re.match(allowed, user['first_name']))
         check_last = bool(re.match(allowed, user['last_name']))
         check_number = bool(re.match(phone_allowed, user['phone_number']))
-        false_pass = " "
         # ------
         if ((len(user['first_name']) - (user['first_name'].count(' ')) == 0) and (len(user['last_name']) - (user['last_name'].count(' ')) == 0)
             and (len(user['email']) - (user['email'].count(' ')) == 0) and (len(user['password']) == 0)) and (len(user['phone_number']) - (user['phone_number'].count(' ')) == 0):
@@ -46,11 +45,12 @@ class User:
             flash("First name must be atleast 2 characters")
             is_valid = False
         elif len(user['first_name']) - (user['first_name'].count(' ')) > 100:
-            flash("First name must less than 255 characters")
+            flash("First name must less than 100 characters")
             is_valid = False
         elif check_first == False:
             flash("First name must only contains letters")
             is_valid = False
+
 # ------- LAST NAME VALIDATION
 
         elif len(user['last_name']) - (user['last_name'].count(' ')) == 0:
@@ -60,25 +60,27 @@ class User:
             flash("Last name must be atleast 2 characters")
             is_valid = False
         elif len(user['last_name']) - (user['last_name'].count(' ')) > 100:
-            flash("Last name must less than 255 characters")
+            flash("Last name must less than 100 characters")
             is_valid = False
         elif check_last == False:
             flash("Last name must only contain letters")
             is_valid = False
+
 # ------- EMAIL VALIDATION
 
-        elif len(results) > 0:
+        elif len(email_results) > 0:
             flash("Email is already in use. Please try another email")
             is_valid = False
         elif len(user['email']) - (user['email'].count(' ')) == 0:
             flash("Email is required")
             is_valid = False
-        elif len(user['last_name']) - (user['last_name'].count(' ')) > 100:
-            flash("Last name must less than 255 characters")
+        elif len(user['email']) - (user['email'].count(' ')) > 100:
+            flash("Email must less than 100 characters")
             is_valid = False
         elif not EMAIL_REGEX.match(user['email']):
             flash("Invalid email format")
             is_valid = False
+
 # ------- PASSWORD VALIDATION
 
         elif len(user['password']) == 0:
@@ -90,8 +92,12 @@ class User:
         elif len(user['password']) > 100:
             flash("Password must be less than 100 characters")
             is_valid = False
+
 # ------- PHONE NUMBER VALIDATION
 
+        elif len(number_results) > 0:
+            flash("Phone number is already in use. Please try another number")
+            is_valid = False
         elif len(user['phone_number']) - (user['phone_number'].count(' ')) == 0:
             flash("Phone number is required")
             is_valid = False
@@ -134,6 +140,13 @@ class User:
     @classmethod
     def get_with_email(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        if len(results) < 1:
+            return False
+        return cls(results[0])
+    @classmethod
+    def get_with_number(cls, data):
+        query = "SELECT * FROM users WHERE phone_number = %(phone_number)%;"
         results = connectToMySQL(cls.DB).query_db(query, data)
         if len(results) < 1:
             return False

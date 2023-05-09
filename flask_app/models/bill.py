@@ -40,6 +40,20 @@ class Bill:
                 VALUES (%(name)s, %(amount)s, %(due_day)s, %(user_id)s, NOW(), NOW());"""
         return connectToMySQL(cls.DB).query_db(query, data)
     @classmethod
+    def edit_bill(cls, data):
+        query = """UPDATE bills
+                SET name = %(name)s,
+                amount = %(amount)s,
+                due_day = %(due_day)s
+                WHERE id = %(id)s"""
+        return connectToMySQL(cls.DB).query_db(query, data)
+    @classmethod
+    def get_by_id(cls, data):
+        query = """SELECT * FROM bills 
+                WHERE id = %(id)s;"""
+        results = connectToMySQL(cls.DB).query_db(query, data)
+        return cls(results[0])
+    @classmethod
     def scan_dates(cls):
         query = """SELECT * FROM bills
                 LEFT JOIN users 
@@ -57,3 +71,8 @@ class Bill:
             one_bill = cls(bill)
             all_bills.append(one_bill)
         return all_bills
+    @classmethod
+    def delete_bill(cls, data):
+        query = """DELETE FROM bills
+                WHERE id = %(id)s;"""
+        return connectToMySQL(cls.DB).query_db(query, data)

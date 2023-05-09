@@ -164,9 +164,21 @@
     border-radius: 10px;
 }
 
+#single-bot{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#single-bot a{
+    margin-left: 40px;
+    color: black;
+    font-size: 90%;
+}
+
 #add-popup-bill, #add-popup-income{
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     background-color: white;
     border: 1px solid black;
@@ -183,7 +195,7 @@
 }
 
 #add-popup-bill.active, #add-popup-income.active{
-    top: 50%;
+    top: 40%;
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
@@ -203,4 +215,9 @@
 .wrapper-title a{
     text-decoration: none;
     color: black;
+}
+
+#errors{
+    margin-left: 30px;
+    color: red;
 }

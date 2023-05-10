@@ -10,9 +10,6 @@
     </head>
     <body>
         <div id="container">
-            <div id="progress">
-                <span id="progress-value">&#x1F815;</span>
-            </div>
             <div id="top-bar">
                 <a href="/"> <img src="{{ url_for('static', filename= 'images/logo3.png')}}" alt="logo"> </a>
             </div>
@@ -71,16 +68,39 @@
                         </div>
                     </div>
                     <div id="mb-bottom">
-                        <div id="mb-left">
-                            <p> Daily </p>
+                        <div id="mb-left" class="mb-bot-section">
+                            <h2> Daily </h2>
+                            <div class="tasks-section">
+                                <div class="tasks">
+                                    <div id="daily-tasks-list" class="tasks-list">
+                                        <div class="list-left">
+                                            {% for daily in dailies %} 
+                                                <h5> {{ daily.name }} </h5>
+                                            {% endfor %} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="mb-right">
-                            <p> Weekly </p>
+                        <div id="mb-right" class="mb-bot-section">
+                            <h2> Weekly </h2>
+                            <div class="tasks-section">
+                                <div class="tasks">
+                                    <div id="weekly-tasks-list" class="tasks-list">
+                                        {% for weekly in weeklies %} 
+                                            <h5> {{ weekly.name }} </h5>
+                                        {% endfor %} 
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- POP UPS -->
+
         <div id="add-popup-bill">
             <div class="wrapper">
                 <div class="wrapper-title">

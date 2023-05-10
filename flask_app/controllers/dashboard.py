@@ -3,8 +3,9 @@ from flask import render_template, redirect, request, session
 from flask_app.models.user import User
 from flask_app.models.bill import Bill
 from flask_app.models.income import Income
-from flask_app.controllers import bill
-from flask_app.controllers import income
+from flask_app.models.daily import Daily
+from flask_app.models.weekly import Weekly
+from flask_app.controllers import incomes, bills, users
 from flask import flash
 from flask import jsonify
 from flask_bcrypt import Bcrypt
@@ -25,7 +26,9 @@ def dashboard(user_id):
     user = User.get_with_id(data)
     bills = Bill.bills_for_one(data)
     incomes = Income.incomes_for_one(data)
-    return render_template('dashboard.html', user = user, bills = bills, incomes = incomes)
+    dailies = Daily.all_for_one(data)
+    weeklies = Weekly.all_for_one(data)
+    return render_template('dashboard.html', user = user, bills = bills, incomes = incomes, dailies = dailies, weeklies = weeklies)
 
 @app.route('/terms')
 def terms_page():

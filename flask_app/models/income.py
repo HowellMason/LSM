@@ -23,8 +23,8 @@ class Income:
         elif len(income['name']) - (income['name'].count(' ')) < 2:
             flash("Income name requires at least 2 characters", 'income')
             is_valid = False
-        elif len(income['name']) - (income['name'].count(' ')) > 75:
-            flash("Income name should be less than 75 characters", 'income')
+        elif len(income['name']) - (income['name'].count(' ')) > 40:
+            flash("Income name should be less than 40 characters", 'income')
             is_valid = False
         elif len(income['amount']) - (income['amount'].count(' ')) == 0:
             flash("Income amount is required", 'income')

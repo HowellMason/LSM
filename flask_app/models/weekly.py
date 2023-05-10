@@ -1,7 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 
-class Daily:
+class Weekly:
     DB = 'billing'
     def __init__(self, data):
         self.id = data['id']
@@ -11,37 +11,37 @@ class Daily:
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
     @staticmethod
-    def validate_daily(daily):
+    def validate_weekly(weekly):
         is_valid = True
-        if len(daily['name'] - (daily['name'].count(' '))) == 0:
+        if len(weekly['name'] - (weekly['name'].count(' '))) == 0:
             flash("Daily name is required")
             is_valid = False
-        elif len(daily['name'] - (daily['name'].count(' '))) < 2:
+        elif len(weekly['name'] - (weekly['name'].count(' '))) < 2:
             flash("Daily name requires at least 2 characters")
             is_valid = False
-        elif len(daily['name']) > 25:
+        elif len(weekly['name']) > 25:
             flash("Daily name should be less than 25 characters")
             is_valid = False
         return is_valid
     @classmethod
-    def add_daily(cls, data):
-        query = """INSERT INTO dailies (name, category, user_id, created_at, updated_at)
+    def add_weekly(cls, data):
+        query = """INSERT INTO weeklies (name, category, user_id, created_at, updated_at)
                 VALUES (%(name)s, %(category)s, %(user_id)s, NOW(), NOW());"""
         return connectToMySQL(cls.DB).query_db(query, data)
     @classmethod
     def all_for_one(cls, data):
-        query = """SELECT * FROM dailies 
+        query = """SELECT * FROM weeklies 
                 LEFT JOIN users
-                ON dailies.user_id = users.id
+                ON weeklies.user_id = users.id
                 WHERE users.id = %(id)s;"""
         results = connectToMySQL(cls.DB).query_db(query, data)
-        all_dailies = []
+        all_weeklies = []
         for daily in results:
-            one_daily = cls(daily)
-            all_dailies.append(one_daily)
-        return all_dailies
+            one_weekly = cls(daily)
+            all_weeklies.append(one_weekly)
+        return all_weeklies
     @classmethod
-    def delete_daily(cls, data):
-        query = """DELETE FROM dailies
+    def delete_weekly(cls, data):
+        query = """DELETE FROM weeklies
                 WHERE id = %(id)s;"""
         return connectToMySQL(cls.DB).query_db(query, data)

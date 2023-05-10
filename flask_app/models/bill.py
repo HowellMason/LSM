@@ -24,8 +24,8 @@ class Bill:
         elif len(bill['name']) - (bill['name'].count(' ')) < 2:
             flash("Bill name requires at least 2 characters", 'bill')
             is_valid = False
-        elif len(bill['name']) - (bill['name'].count(' ')) > 75:
-            flash("Bill name should be less than 75 characters", 'bill')
+        elif len(bill['name']) - (bill['name'].count(' ')) > 40:
+            flash("Bill name should be less than 40 characters", 'bill')
             is_valid = False
         elif len(bill['amount']) - (bill['amount'].count(' ')) == 0:
             flash("Bill amount is required", 'bill')

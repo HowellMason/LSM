@@ -169,6 +169,7 @@
 #add-popup-bill.active, #add-popup-income.active{
     top: 40%;
     opacity: 1;
+    position: absolute;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
     transition: top 0ms ease-in-out 200ms,
@@ -230,4 +231,56 @@
 
 .tasks-list{
     min-height: 100px;
+}
+
+#add-popup-daily, #add-popup-weekly{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    background-color: white;
+    border: 1px solid black;
+    transform: translate(-50%, -50%) scale(1.25);
+    width: 480px;
+    height: 500px;
+    padding: 10px;
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms,
+                transform 20ms ease-in-out 0ms;
+}
+
+#add-popup-daily.active, #add-popup-weekly.active{
+    top: 40%;
+    opacity: 1;
+    position: absolute;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms,
+                transform 20ms ease-in-out 0ms;
+    box-shadow: 0 0 5px 2px;
+}
+
+.list-item{
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    width: 95%;
+    margin: 4px 0 4px 0;
+}
+
+.list-item span{
+    margin: 0 8px 0 4px;
+}
+
+.list-left{
+    display: flex;
+}
+
+.list-right{
+    width: 10%;
+    display: flex;
+    justify-content: space-around;
 }

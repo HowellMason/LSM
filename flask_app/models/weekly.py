@@ -14,13 +14,13 @@ class Weekly:
     def validate_weekly(weekly):
         is_valid = True
         if len(weekly['name'] - (weekly['name'].count(' '))) == 0:
-            flash("Daily name is required")
+            flash("Daily name is required", 'weekly')
             is_valid = False
         elif len(weekly['name'] - (weekly['name'].count(' '))) < 2:
-            flash("Daily name requires at least 2 characters")
+            flash("Daily name requires at least 2 characters", 'weekly')
             is_valid = False
         elif len(weekly['name']) > 25:
-            flash("Daily name should be less than 25 characters")
+            flash("Daily name should be less than 25 characters", 'weekly')
             is_valid = False
         return is_valid
     @classmethod

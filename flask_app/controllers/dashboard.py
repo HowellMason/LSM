@@ -5,7 +5,7 @@ from flask_app.models.bill import Bill
 from flask_app.models.income import Income
 from flask_app.models.daily import Daily
 from flask_app.models.weekly import Weekly
-from flask_app.controllers import incomes, bills, users
+from flask_app.controllers import incomes, bills, users, dailies
 from flask import flash
 from flask import jsonify
 from flask_bcrypt import Bcrypt

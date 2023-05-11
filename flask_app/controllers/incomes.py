@@ -20,7 +20,7 @@ def edit_income(income_id):
 @app.route('/income-process', methods = ['POST'])
 def add_income():
     if not Income.validate_income(request.form):
-        return redirect('/income/edit/' + str(request.form['id']))
+        return redirect('/dashboard/' + str(session['user_id']))
     data = {
         'name': request.form['name'],
         'amount': request.form['amount'],

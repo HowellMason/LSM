@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
-import re
+import datetime 
+from dateutil.relativedelta import relativedelta
 
 class Bill:
     DB = 'billing'
@@ -12,6 +13,7 @@ class Bill:
         self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.til_due = None
     @staticmethod
     def validate_bill(bill):
         is_valid = True
@@ -68,8 +70,18 @@ class Bill:
         results = connectToMySQL(cls.DB).query_db(query, data)
         all_bills = []
         for bill in results:
-            one_bill = cls(bill)
-            all_bills.append(one_bill)
+            this_bill = cls(bill)
+            today = datetime.date.today()
+            dueDay = bill['due_day']
+            dayDue = datetime.date(today.year, today.month, dueDay)
+            if today.day > dayDue.day:
+                dueDate = dayDue + relativedelta(months=1)
+            else:
+                dueDate = dayDue
+            daysLeft = (dueDate - today).days
+            print(daysLeft)
+            this_bill.til_due = daysLeft
+            all_bills.append(this_bill)
         return all_bills
     @classmethod
     def delete_bill(cls, data):

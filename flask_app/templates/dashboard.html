@@ -56,7 +56,15 @@
                                 <div class="single">
                                     <div class="name">
                                         <h5> {{ bill.name }} </h5>
-                                        <span> Due in days </span>
+                                        {% if bill.til_due|int == 0|int %} 
+                                            <span> Due Today </span>
+                                        {% endif %} 
+                                        {% if bill.til_due|int == 1|int %} 
+                                            <span> Due Tomorrow </span>
+                                        {% endif %} 
+                                        {% if bill.til_due|int > 1|int %} 
+                                            <span> Due in {{ bill.til_due}} days</span>
+                                        {% endif %} 
                                     </div>
                                     <p> &nbsp &nbsp {{ "${:,.2f}".format(bill.amount) }} </p>
                                     <div id="single-bot">
@@ -81,10 +89,10 @@
                                             {% for daily in dailies %} 
                                                 {% if daily.category == 'Not Complete' %}
                                                     {% if daily.priority == 'Low' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(253, 255, 231);">
                                                             <div class="list-left">
-                                                                <span style="color: green;"> | </span>
-                                                                <h5> {{ daily.name }} </h5>
+                                                                <!-- <span style="color: green;"> • </span> -->
+                                                                <h5 class="name"> {{ daily.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
                                                                 <a href="/complete-daily-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
@@ -93,10 +101,10 @@
                                                         </div>
                                                     {% endif %}
                                                     {% if daily.priority == 'Normal' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(223, 223, 255);">
                                                             <div class="list-left">
-                                                                <span style="color: blue;"> | </span>
-                                                                <h5> {{ daily.name }} </h5>
+                                                                <!-- <span style="color: blue;"> • </span> -->
+                                                                <h5 class="name"> {{ daily.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
                                                                 <a href="/complete-daily-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
@@ -105,10 +113,10 @@
                                                         </div>
                                                     {% endif %}
                                                     {% if daily.priority == 'High' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(255, 228, 228);">
                                                             <div class="list-left">
-                                                                <span style="color: red;"> | </span>
-                                                                <h5> {{ daily.name }} </h5>
+                                                                <!-- <span style="color: red;"> • </span> -->
+                                                                <h5 class="name"> {{ daily.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
                                                                 <a href="/complete-daily-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
@@ -118,10 +126,9 @@
                                                     {% endif %}
                                                 {% endif %} 
                                                 {% if daily.category == 'Complete' %} 
-                                                <div class="list-item">
+                                                <div class="list-item" style="background-color: rgb(184, 184, 184);">
                                                     <div class="list-left">
-                                                        <span style="color: black"> | </span>
-                                                        <h5 style="text-decoration: line-through;"> {{ daily.name }} </h5>
+                                                        <h5 style="text-decoration: line-through;" class="name"> {{ daily.name }} </h5>
                                                     </div>
                                                     <div class="list-right">
                                                         <a href="/revert-daily-process/{{ daily.id }}"> <i class="fa-solid fa-arrow-left" style="color: #000000;"></i> </a>
@@ -147,51 +154,47 @@
                                             {% for weekly in weeklies %} 
                                                 {% if weekly.category == 'Not Complete' %}
                                                     {% if weekly.priority == 'Low' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(253, 255, 231);">
                                                             <div class="list-left">
-                                                                <span style="color: green;"> | </span>
-                                                                <h5> {{ weekly.name }} </h5>
+                                                                <h5 class="name"> {{ weekly.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
-                                                                <a href="/complete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
-                                                                <a href="/delete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
+                                                                <a href="/complete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
+                                                                <a href="/delete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
                                                             </div>
                                                         </div>
                                                     {% endif %}
                                                     {% if weekly.priority == 'Normal' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(223, 223, 255);">
                                                             <div class="list-left">
-                                                                <span style="color: blue;"> | </span>
-                                                                <h5> {{ weekly.name }} </h5>
+                                                                <h5 class="name"> {{ weekly.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
-                                                                <a href="/complete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
-                                                                <a href="/delete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
+                                                                <a href="/complete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
+                                                                <a href="/delete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
                                                             </div>
                                                         </div>
                                                     {% endif %}
                                                     {% if weekly.priority == 'High' %} 
-                                                        <div class="list-item">
+                                                        <div class="list-item" style="background-color: rgb(255, 228, 228);">
                                                             <div class="list-left">
-                                                                <span style="color: red;"> | </span>
-                                                                <h5> {{ weekly.name }} </h5>
+                                                                <h5 class="name"> {{ weekly.name }} </h5>
                                                             </div>
                                                             <div class="list-right">
-                                                                <a href="/complete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
-                                                                <a href="/delete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
+                                                                <a href="/complete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-check" style="color: #000000;"></i> </a>
+                                                                <a href="/delete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
                                                             </div>
                                                         </div>
                                                     {% endif %}
                                                 {% endif %} 
                                                 {% if weekly.category == 'Complete' %} 
-                                                <div class="list-item">
+                                                <div class="list-item" style="background-color: rgb(184, 184, 184);">
                                                     <div class="list-left">
-                                                        <span style="color: black"> | </span>
-                                                        <h5 style="text-decoration: line-through;"> {{ daily.name }} </h5>
+                                                        <h5 style="text-decoration: line-through;" class="name"> {{ weekly.name }} </h5>
                                                     </div>
                                                     <div class="list-right">
-                                                        <a href="/revert-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-arrow-left" style="color: #000000;"></i> </a>
-                                                        <a href="/delete-weekly-process/{{ daily.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
+                                                        <a href="/revert-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-arrow-left" style="color: #000000;"></i> </a>
+                                                        <a href="/delete-weekly-process/{{ weekly.id }}"> <i class="fa-solid fa-trash" style="color: #000000;"></i> </a>
                                                     </div>
                                                 </div>
                                                 {% endif %}

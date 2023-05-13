@@ -55,7 +55,7 @@
 }
 
 #nav-two{
-    width: 25%;
+    width: 20%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -91,10 +91,6 @@
     margin-top: 35px;
 }
 
-#mb-top h2{
-    text-decoration: underline 2px #0CC0DF;
-}
-
 .mb-top-section{
     display: flex;
     flex-direction: column;
@@ -110,6 +106,11 @@
 
 .section-title{
     display: flex;
+    height: 46px;
+}
+
+.section-title h2{
+    border-bottom: 2px solid #0CC0DF;
 }
 
 .section-title img{
@@ -205,10 +206,6 @@
     flex: 1;
 }
 
-#mb-bottom h2{
-    text-decoration: underline 2px #0CC0DF;
-}
-
 .tasks-section{
     display: flex;
     padding: 6px;
@@ -226,7 +223,7 @@
 }
 
 .tasks-section h4{
-    text-decoration: 1px rgb(180, 180, 180) underline;
+    border-bottom: 1px solid #0CC0DF;
 }
 
 .tasks-list{
@@ -266,8 +263,9 @@
 .list-item{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 6px;
-    width: 95%;
+    width: 100%;
     margin: 4px 0 4px 0;
 }
 
@@ -283,4 +281,8 @@
     width: 10%;
     display: flex;
     justify-content: space-around;
+}
+
+.name{
+    margin-top: 4px;
 }

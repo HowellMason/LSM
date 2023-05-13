@@ -1,10 +1,10 @@
 from flask_app import app
 from flask import redirect, request, session
-from flask_app.models.daily import Daily
+from flask_app.models.weekly import Weekly
 
-@app.route('/daily-process', methods = ['POST'])
-def add_daily(): 
-    if not Daily.validate_daily(request.form):
+@app.route('/weekly-process', methods = ['POST'])
+def add_weekly(): 
+    if not Weekly.validate_weekly(request.form):
         return redirect('/dashboard/' + str(session['user_id']))
     data = {
         'name': request.form['name'],
@@ -12,31 +12,31 @@ def add_daily():
         'priority': request.form['priority'],
         'user_id': request.form['user_id']
     }
-    Daily.add_daily(data)
+    Weekly.add_weekly(data)
     return redirect('/dashboard/' + str(session['user_id']))
 
-@app.route('/complete-daily-process/<int:daily_id>')
-def complete_daily(daily_id):
+@app.route('/complete-weekly-process/<int:weekly_id>')
+def complete_weekly(weekly_id):
     data = {
-        'id': daily_id,
+        'id': weekly_id,
         'category': 'Complete'
     }
-    Daily.complete_daily(data)
+    Weekly.complete_weekly(data)
     return redirect('/dashboard/' + str(session['user_id']))
 
-@app.route('/revert-daily-process/<int:daily_id>')
-def revert_daily(daily_id):
+@app.route('/revert-weekly-process/<int:weekly_id>')
+def revert_weekly(weekly_id):
     data = {
-        'id': daily_id,
+        'id': weekly_id,
         'category': 'Not Complete'
     }
-    Daily.revert_daily(data)
+    Weekly.revert_weekly(data)
     return redirect('/dashboard/' + str(session['user_id']))
 
-@app.route('/delete-daily-process/<int:daily_id>')
-def delete_daily(daily_id):
+@app.route('/delete-weekly-process/<int:weekly_id>')
+def delete_weekly(weekly_id):
     data = {
-        'id': daily_id
+        'id': weekly_id
     }
-    Daily.delete_daily(data)
+    Weekly.delete_weekly(data)
     return redirect('/dashboard/' + str(session['user_id']))
